@@ -65,7 +65,7 @@ namespace WeatherReport
                 //.Body($"On {DateTime.Now} The temperature today is {convertToCelsius(weather.main.temp)} though it will feel like {convertToCelsius(weather.main.feels_like)}. Today's conditions will be {weather.weather[0].description}.")
                 .SendAsync();
 
-          // confirm the above has worked
+          // confirm the above has worked.
             Console.WriteLine("Email sent.");
         }
     }
