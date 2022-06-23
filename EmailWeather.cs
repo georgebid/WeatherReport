@@ -8,6 +8,8 @@ using FluentEmail.Razor;
 using System.Net;
 using System.Configuration;
 using System.Collections.Specialized;
+using System.Web;
+
 
 namespace WeatherReport
 {
@@ -15,7 +17,7 @@ namespace WeatherReport
     {
         public void SendEmail()
         {
-            // the info below needs to go into a seperate class that contains the API information.
+            // the info below needs to go into a separate class that contains the API information.
             string apiKey = "b07325fc40156ccf165c6401078311b1";
 
             string lat = "51.454514";
@@ -27,13 +29,15 @@ namespace WeatherReport
             var url = new Uri($"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={apiKey}");
 
             var result = client.GetAsync(url).Result.Content.ReadAsStringAsync().Result;
-            //Console.WriteLine(result);
-
+            Console.WriteLine(url);
+            Console.WriteLine(result);
+            
             WeatherDetails weather = JsonSerializer.Deserialize<WeatherDetails>(result);
 
+            Console.WriteLine(weather.ToString());
             CelsiusConvertor celsiusConvertor = new CelsiusConvertor();
 
-            Console.WriteLine(weather.weather[0].description);
+            //Console.WriteLine(weather.Weather[0].Description);
             // string builder is more efficient than using string appending or string concatination.
             StringBuilder template = new StringBuilder();
             template.AppendLine(value: "Dear Georgina");
@@ -58,10 +62,12 @@ namespace WeatherReport
                 //marking the use default credentials seems to clear out and existing data and avoid erroring.
                 sender.UseDefaultCredentials = false;
                 // THIS NEEDS TO MOVE
-                NameValueCollection sAll;
-                sAll = ConfigurationManager.AppSettings;
+                
+                var username = ConfigurationManager.AppSettings["UserName"];
+                var password = ConfigurationManager.AppSettings["Password"];
+
                 //sender.Credentials = new NetworkCredential("georginaweathertest@gmail.com", "Hmgd6961!");
-                sender.Credentials = (ICredentialsByHost)sAll;
+                sender.Credentials = new System.Net.NetworkCredential(username, password);
                 sender.EnableSsl = true;
                 sender.Send(mailMessage);
             };
