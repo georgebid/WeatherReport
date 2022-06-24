@@ -7,8 +7,6 @@ using FluentEmail.Core;
 using FluentEmail.Razor;
 using System.Net;
 using System.Configuration;
-using System.Collections.Specialized;
-using System.Web;
 
 
 namespace WeatherReport
@@ -18,26 +16,12 @@ namespace WeatherReport
         public void SendEmail()
         {
             // the info below needs to go into a separate class that contains the API information.
-            string apiKey = "b07325fc40156ccf165c6401078311b1";
+            WeatherLocation weatherLocation = new WeatherLocation();
+           
+            WeatherDetails weather = JsonSerializer.Deserialize<WeatherDetails>(weatherLocation.LocationInfo());
 
-            string lat = "51.454514";
-
-            string lon = "-2.587910";
-
-            HttpClient client = new HttpClient();
-
-            var url = new Uri($"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={apiKey}");
-
-            var result = client.GetAsync(url).Result.Content.ReadAsStringAsync().Result;
-            Console.WriteLine(url);
-            Console.WriteLine(result);
-            
-            WeatherDetails weather = JsonSerializer.Deserialize<WeatherDetails>(result);
-
-            Console.WriteLine(weather.ToString());
             CelsiusConvertor celsiusConvertor = new CelsiusConvertor();
 
-            //Console.WriteLine(weather.Weather[0].Description);
             // string builder is more efficient than using string appending or string concatination.
             StringBuilder template = new StringBuilder();
             template.AppendLine(value: "Dear Georgina");
@@ -52,7 +36,7 @@ namespace WeatherReport
             };
 
             //mailMessage.To.Add("georgina.bidder@truedigital.co.uk");
-            mailMessage.To.Add("georgina.bidder@icloud.com");
+            mailMessage.To.Add("mitch.ford1@gmail.com");
             //Email.DefaultSender = sender;
             Email.DefaultRenderer = new RazorRenderer();
 
@@ -62,12 +46,13 @@ namespace WeatherReport
                 //marking the use default credentials seems to clear out and existing data and avoid erroring.
                 sender.UseDefaultCredentials = false;
                 // THIS NEEDS TO MOVE
-                
-                var username = ConfigurationManager.AppSettings["UserName"];
+
+                //var username = Properties.Settings.Default.username;
+                var username = ConfigurationManager.AppSettings["Username"];
                 var password = ConfigurationManager.AppSettings["Password"];
 
                 //sender.Credentials = new NetworkCredential("georginaweathertest@gmail.com", "Hmgd6961!");
-                sender.Credentials = new System.Net.NetworkCredential(username, password);
+                sender.Credentials = new NetworkCredential(username, password);
                 sender.EnableSsl = true;
                 sender.Send(mailMessage);
             };

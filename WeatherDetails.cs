@@ -3,7 +3,7 @@
 
 namespace WeatherReport
 {
-    // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
+    //Originally had these in the correct format (Title case) but it was breaking. Eventually realised it was because the JSON needed the properties to be lowercase. Seems odd? Anyway around this?
     public class Coord
     {
         public double Lon { get; set; }
