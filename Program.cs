@@ -4,11 +4,12 @@
     {
         static void Main(string[] args) 
         {
-           SmsWeather smsWeather = new();
+         //  SmsCredentials smsWeather = new();
            EmailWeather emailWeather = new();
+           
 
            emailWeather.SendEmail();
-           smsWeather.SendText();
+           SmsCredentials.GetCredentials();
         }
     }
 }

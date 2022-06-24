@@ -2,27 +2,22 @@
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using System.Text.Json;
+using Twilio.Rest.Verify.V2.Service;
 
 namespace WeatherReport
 {
-    internal class SmsWeather
+    internal static class SmsCredentials
     {
-        public void SendText()
+        public static void GetCredentials()
         {
-            WeatherLocation weatherLocation = new WeatherLocation();
-
-            WeatherDetails weather = JsonSerializer.Deserialize<WeatherDetails>(weatherLocation.LocationInfo());
-           
             string accountSid = Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID");
             string authToken = Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN");
 
             TwilioClient.Init(username:accountSid, password:authToken);
 
-            
-            CelsiusConvertor celsiusConvertor = new CelsiusConvertor();
 
-
-            Console.WriteLine(message.Sid);
+            TextMessage textMessage = new();
+            textMessage.Messaging();
         }
         
     }
