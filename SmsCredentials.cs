@@ -13,8 +13,7 @@ namespace WeatherReport
             string accountSid = Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID");
             string authToken = Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN");
 
-            TwilioClient.Init(username:accountSid, password:authToken);
-
+            TwilioClient.Init(username: accountSid, password: authToken);
 
             TextMessage textMessage = new();
             textMessage.Messaging();

@@ -4,11 +4,9 @@
     {
         static void Main(string[] args) 
         {
-         //  SmsCredentials smsWeather = new();
-           EmailWeather emailWeather = new();
-           
 
-           emailWeather.SendEmail();
+            //Need to add an instance as its not static anymore.
+           // EmailWeather.SendEmail();
            SmsCredentials.GetCredentials();
         }
     }

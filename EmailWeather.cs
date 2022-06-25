@@ -40,23 +40,12 @@ namespace WeatherReport
             //Email.DefaultSender = sender;
             Email.DefaultRenderer = new RazorRenderer();
 
-            //define the server that will send out the email. In this case its smtp gmail and I had to define the port - 587.
-            using (SmtpClient sender = new SmtpClient(host: "smtp.gmail.com",587))
-            {
-                //marking the use default credentials seems to clear out and existing data and avoid erroring.
-                sender.UseDefaultCredentials = false;
-                // THIS NEEDS TO MOVE
+            EmailCredentials emailCredentials = new EmailCredentials();
 
-                //var username = Properties.Settings.Default.username;
-                var username = ConfigurationManager.AppSettings["Username"];
-                var password = ConfigurationManager.AppSettings["Password"];
+            var sender = emailCredentials.GetEmailCredentials();
 
-                //sender.Credentials = new NetworkCredential("georginaweathertest@gmail.com", "Hmgd6961!");
-                sender.Credentials = new NetworkCredential(username, password);
-                sender.EnableSsl = true;
-                sender.Send(mailMessage);
-            };
-
+            sender.EnableSsl = true;
+            sender.Send(mailMessage);
 
             // confirm the above has worked.
             Console.WriteLine("Email sent.");
