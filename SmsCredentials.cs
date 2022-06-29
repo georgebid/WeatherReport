@@ -6,17 +6,14 @@ using Twilio.Rest.Verify.V2.Service;
 
 namespace WeatherReport
 {
-    internal static class SmsCredentials
+    internal class SmsCredentials
     {
-        public static void GetCredentials()
+        public void GetCredentials()
         {
             string accountSid = Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID");
             string authToken = Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN");
 
             TwilioClient.Init(username: accountSid, password: authToken);
-
-            TextMessage textMessage = new();
-            textMessage.Messaging();
         }
         
     }

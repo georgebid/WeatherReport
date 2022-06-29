@@ -11,8 +11,12 @@ namespace WeatherReport
 {
     public class TextMessage
     {
-        public void Messaging()
+        public string Messaging()
         {
+            //get the credentials to use to send the text
+            SmsCredentials smsCreds = new SmsCredentials();
+            smsCreds.GetCredentials();
+
             CelsiusConvertor celsiusConvertor = new CelsiusConvertor();
             WeatherLocation weatherLocation = new WeatherLocation();
             WeatherDetails weather = JsonSerializer.Deserialize<WeatherDetails>(weatherLocation.LocationInfo());
@@ -22,7 +26,15 @@ namespace WeatherReport
                 from: new Twilio.Types.PhoneNumber("+19108386231"),
                 to: new Twilio.Types.PhoneNumber("+447818517131")
             );
-        } 
+           var textMessage = message.ToString();
+           return textMessage;
+        }
+
+        //public void SendText()
+        //{
+        //    SmsCredentials smsCreds = new SmsCredentials();
+        //    smsCreds.GetCredentials();
+        //}
 
 
     }
