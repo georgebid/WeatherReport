@@ -9,11 +9,11 @@ namespace WeatherReport
     {
         static void Main(string[] args) 
         {
-            SendEmails sendEmail = new SendEmails();
-            sendEmail.SendEmail();
+            //SendEmails sendEmail = new SendEmails();
+            //sendEmail.SendEmail();
 
-           //TextMessage text = new();
-           //text.Messaging();
+           TextMessage text = new();
+           text.Messaging();
 
            Console.WriteLine("Message sent.");
         }
