@@ -12,10 +12,16 @@ namespace WeatherReport
             //SendEmails sendEmail = new SendEmails();
             //sendEmail.SendEmail();
 
-           TextMessage text = new();
-           text.Messaging();
+            SendText();
 
-           Console.WriteLine("Message sent.");
+           static void SendText()
+           {
+               TextMessage text = new();
+               text.Messaging();
+
+               Console.WriteLine("Message sent.");
+            }
+
         }
     }
 }
